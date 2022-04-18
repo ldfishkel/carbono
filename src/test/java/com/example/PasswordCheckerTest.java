@@ -17,9 +17,10 @@ public class PasswordCheckerTest {
 
         Assert.assertEquals(false, checker.isSecure("pcorta"));
         Assert.assertEquals(false, checker.isSecure("123456"));
-        Assert.assertEquals(true, checker.isSecure("un4PassS3gur4!"));
         Assert.assertEquals(false, checker.isSecure("un4passs3gur4!"));
         Assert.assertEquals(false, checker.isSecure("unapasssegura!"));
         Assert.assertEquals(false, checker.isSecure("UNAPASSSEGURA!"));
+        
+        Assert.assertEquals(true, checker.isSecure("un4PassS3gur4!"));
     }
 }
