@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.Arrays;
+
 import com.example.factory.InsecurePasswordCheckerFactory;
 import com.example.utils.InsecurePasswordChecker;
 
@@ -7,20 +9,34 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class PasswordCheckerTest {
-    
+
     @Test
-    public void passwordCheckerTest() {
+    public void insecurePasswordsTest() {
 
         InsecurePasswordChecker checker = InsecurePasswordCheckerFactory.makeChecker();
 
         Assert.assertNotNull(checker);
 
-        Assert.assertEquals(false, checker.isSecure("pcorta"));
-        Assert.assertEquals(false, checker.isSecure("123456"));
-        Assert.assertEquals(false, checker.isSecure("un4passs3gur4!"));
-        Assert.assertEquals(false, checker.isSecure("unapasssegura!"));
-        Assert.assertEquals(false, checker.isSecure("UNAPASSSEGURA!"));
-        
-        Assert.assertEquals(true, checker.isSecure("un4PassS3gur4!"));
+        String[] insecurePasswords = new String[] {
+            "pcorta",         // Es muy corta
+            "B4seball",       // Esta en la lista de passwords debiles
+            "un4passs3gur4!", // No tiene Mayuscula
+            "unapasssegura!", // No tiene Numeros
+            "UNAPASSSEGURA!"  // No tiene Minuscula
+        };
+
+        Arrays.stream(insecurePasswords).forEach(insecurePassword ->
+            Assert.assertFalse(checker.isSecure(insecurePassword)));
+    }
+
+    @Test
+    public void securePasswordsTest() {
+
+        InsecurePasswordChecker checker = InsecurePasswordCheckerFactory.makeChecker();
+
+        Assert.assertNotNull(checker);
+
+        Arrays.stream(new String[] { "un4passS3gur4!", "LaCat3dtaDDS!", "UtnFRB4Medrano", "L4CdeTuMAllb0ys" })
+                .forEach(password -> Assert.assertTrue(checker.isSecure(password)));
     }
 }
