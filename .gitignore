@@ -1,3 +1,4 @@
 target
 .vscode
 .idea
+.apt_generated_tests
