@@ -3,6 +3,7 @@ package com.example.factory;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.TreeSet;
 
 import com.example.utils.InsecurePasswordChecker;
 import com.google.gson.Gson;
@@ -23,7 +24,10 @@ public class InsecurePasswordCheckerFactory {
 
             e.printStackTrace();
 
-            return null;
+            InsecurePasswordChecker checker = new InsecurePasswordChecker();
+            checker.setInsecurePasswords(new TreeSet<String>());
+
+            return checker;
         }
     }
 }
