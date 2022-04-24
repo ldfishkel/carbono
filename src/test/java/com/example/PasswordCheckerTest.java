@@ -13,7 +13,7 @@ public class PasswordCheckerTest {
     @Test
     public void insecurePasswordsTest() {
 
-        InsecurePasswordChecker checker = InsecurePasswordCheckerFactory.makeChecker();
+        InsecurePasswordChecker checker = InsecurePasswordCheckerFactory.makeCheckerFromJsonFile();
 
         Assert.assertNotNull(checker);
 
@@ -32,11 +32,16 @@ public class PasswordCheckerTest {
     @Test
     public void securePasswordsTest() {
 
-        InsecurePasswordChecker checker = InsecurePasswordCheckerFactory.makeChecker();
+        InsecurePasswordChecker checker = InsecurePasswordCheckerFactory.makeCheckerFromJsonFile();
 
         Assert.assertNotNull(checker);
 
-        Arrays.stream(new String[] { "un4passS3gur4!", "LaCat3dtaDDS!", "UtnFRB4Medrano", "L4CdeTuMAllb0ys" })
-                .forEach(password -> Assert.assertTrue(checker.isSecure(password)));
+        Arrays.stream(new String[] { 
+            "un4passS3gur4!", 
+            "LaCat3dtaDDS!", 
+            "UtnFRB4Medrano", 
+            "L4CdeTuMAllb0ys" 
+        })
+        .forEach(password -> Assert.assertTrue(checker.isSecure(password)));
     }
 }

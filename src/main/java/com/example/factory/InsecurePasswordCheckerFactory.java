@@ -12,19 +12,24 @@ public class InsecurePasswordCheckerFactory {
 
     private static String FILE_NAME = "src/main/resources/insecurePasswords.json";
     
-    public static InsecurePasswordChecker makeChecker() {
+    public static InsecurePasswordChecker makeCheckerFromJsonFile() {
 
         Gson gson = new Gson();
 
         try (Reader reader = new FileReader(FILE_NAME)) {
 
-            return gson.fromJson(reader, InsecurePasswordChecker.class);
+            InsecurePasswordChecker checker =  gson.fromJson(reader, InsecurePasswordChecker.class);
+
+            reader.close();
+
+            return checker;
 
         } catch (IOException e) {
 
             e.printStackTrace();
 
             InsecurePasswordChecker checker = new InsecurePasswordChecker();
+            
             checker.setInsecurePasswords(new TreeSet<String>());
 
             return checker;
